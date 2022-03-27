@@ -54,14 +54,10 @@ function App() {
     if (!walletConnected) {
       connectWallet();
     }
-    console.log("Connected");
   }, [walletConnected, connectWallet]);
 
   useEffect(() => {
-    console.log("Connected 2");
     const handleAccountChange = (accounts) => {
-      console.log(accounts);
-
       if (accounts.length === 0) {
         Auth.clearInjected(() => {
           setWalletConnected(false);
