@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { providers, utils } from "ethers";
 import Web3Modal from "web3modal";
 import Header from "components/Header";
@@ -35,7 +35,7 @@ function App() {
     return web3Provider;
   };
 
-  const connectWallet = async () => {
+  const connectWallet = useCallback(async () => {
     try {
       const signer = await getProviderOrSigner(true);
       const [address, balance] = await Promise.all([
@@ -48,15 +48,17 @@ function App() {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (!walletConnected) {
       connectWallet();
     }
-  });
+    console.log("Connected");
+  }, [walletConnected, connectWallet]);
 
   useEffect(() => {
+    console.log("Connected 2");
     const handleAccountChange = (accounts) => {
       console.log(accounts);
 
